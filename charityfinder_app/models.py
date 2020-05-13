@@ -3,34 +3,30 @@ from django.contrib.auth.models import User
 
 
 def get_sentinel_user():
-    return User().objects.get_or_create(username='User deleted')[0]
+    return User().objects.get_or_create(username='User_deleted')[0]
 
 
 def get_sentinel_comment():
-    return Comment().objects.get_or_create(body='Comment deleted')[0]
+    pass
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user))
+    # any way to avoid null?, 8 = deleted user instance
+    author = models.ForeignKey(User, on_delete=models.SET(8), null=True)
     body = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    edited_at = models.DateTimeField(auto_now=True)
-    project_id = models.IntegerField()  # should be textfield if comparable
-
-    def __str__(self):
-        return f"{self.author} - {self.created_at}"
-
-
-# alt, field in comment (extra null issue) - reply to self fk default?
-class ReplyComment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user))
-    body = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    edited_at = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    last_edited = models.DateTimeField(auto_now=True)
     project_id = models.IntegerField()
-    reply_to = models.ForeignKey(Comment, on_delete=models.SET(get_sentinel_comment))
+    up_votes = models.IntegerField(default=0)
+    # any way to avoid null?, protect = comment not deleted, but updated to "deleted" to keep structure
+    reply_to = models.ForeignKey("self", null=True, on_delete=models.PROTECT, related_name='replies')
+
+    class Meta:
+        ordering = ['up_votes', 'created']
 
     def __str__(self):
-        return f"{self.author} - {self.created_at}"
+        return f"{self.author} - {self.created}"
+
+
 # rating? (user / all)
 #

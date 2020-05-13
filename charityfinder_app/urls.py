@@ -9,8 +9,8 @@ urlpatterns = [
     path('project/<int:id>/', views.project_detail_view),
 
     # API
-    path('api/v1/', CommentList.as_view()),
-    path('api/v1/<int:pk>/', CommentDetail.as_view()),
+    path('api/v1/comments/', CommentList.as_view()),
+    path('api/v1/comments/<int:pk>/', CommentDetail.as_view()),
     path('api/v1/users/', UserList.as_view()),
     path('api/v1/users/<int:pk>/', UserDetail.as_view()),
     path('api/v1/projects/<int:id>/', api.project_detail),
