@@ -2,10 +2,12 @@ from django.urls import path, include
 from .api import CommentList, CommentDetail, UserList, UserDetail
 from . import views, api
 
+app_name = 'charityfinder_app'
+
 urlpatterns = [
-    # path('', views.index, name='index'),
-    # all-auth, alt use custom login app
-    path('accounts/', include('allauth.urls')),
+    path('', views.index, name='index'),
+    # all-auth, alt to using custom login app
+    # path('accounts/', include('allauth.urls')),
     path('project/<int:id>/', views.project_detail_view),
 
     # API
