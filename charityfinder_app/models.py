@@ -2,14 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-def get_sentinel_user():
-    return User().objects.get_or_create(username='User_deleted')[0]
-
-
-def get_sentinel_comment():
-    pass
-
-
 class Comment(models.Model):
     # any way to avoid null?, 8 = deleted user instance
     author = models.ForeignKey(User, on_delete=models.SET(8), null=True)
