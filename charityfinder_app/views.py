@@ -2,6 +2,15 @@ from django.shortcuts import render
 import requests
 
 
+# @login_required
+def index(request):
+
+    context = {
+
+    }
+    return render(request, 'charityfinder_app/index.html', context)
+
+
 def project_detail_view(request, id):
     # refine
     url = f"https://api.globalgiving.org/api/public/projectservice/projects/{id}.json?api_key=79638b32-7812-44ef-b361-9eb4ef85aae0"

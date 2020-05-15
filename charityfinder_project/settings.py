@@ -33,14 +33,17 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     # pre-made django-rest-auth for login endpoint
     'rest_auth',
-    # part of django-allauth config (signup)
+    # part of django-allauth config (signup, api)
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
+    # RQ
+    'django_rq',
 
     # local
     'charityfinder_app',
+    'login_app',
 ]
 
 REST_FRAMEWORK = {
@@ -64,6 +67,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+RQ_QUEUES = {
+   'default': {
+      'HOST': 'localhost',
+      'PORT': '6379',
+      'DB': 0,
+      'DEFAULT_TIMEOUT': 360,
+   }
+}
 
 ROOT_URLCONF = 'charityfinder_project.urls'
 
@@ -135,8 +147,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# django-allauth config, use console
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# django-allauth (api) config, use console
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/charityfinder/mypage'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/charityfinder'
+
+# EMAIL SETTINGS
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = True ### <--- DON'T USE THIS - USE EMAIL_USE_TLS
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'daneskildsen1234@gmail.com'
+EMAIL_HOST_PASSWORD = '62AqjfaG4xI9g1XF'
