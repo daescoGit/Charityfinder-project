@@ -160,4 +160,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'daneskildsen1234@gmail.com'
-EMAIL_HOST_PASSWORD = '62AqjfaG4xI9g1XF'
+EMAIL_HOST_PASSWORD = 'sendinblue-password'
