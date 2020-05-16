@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'chariftyfinder_app/chariftyfinder_app.css' %}" media="screen"/>
+    <title>Chariftyfinder</title>
+</head>
+<body>
+    <nav> NAV </nav>
+    <p>Welcome {{ user }} - <a href="{% url 'login_app:logout' %}">Log out</a></p>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

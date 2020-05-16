@@ -1,11 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Project</title>
-</head>
-<body>
-    <h1>API TEST</h1>
-    {{ data }}
-</body>
-</html>
+{% extends "charityfinder_app/base.html" %}
+
+{% block content %}
+    <hr />
+    {{ gg_api_data }}
+    <hr />
+    {% for comment in comments  %}
+    {# form?(handle reply) #}
+        <div>
+            <div>{{ comment.author }} - {{ comment.created }}</div>
+            <div>{{ comment.body }}</div>
+        </div>
+    {% endfor %}
+    <hr />
+    <form action="." method="POST">
+        {% if request.user.is_authenticated %}
+            <input type="text" name="newComment" placeholder="Write a comment" />
+            <button>Send</button>
+        {% else %}
+            <input type="text" name="newComment" placeholder="Login to comment" disabled/>
+        {% endif %}
+        {% csrf_token %}
+
+    </form>
+    <hr />
+
+{% endblock %}

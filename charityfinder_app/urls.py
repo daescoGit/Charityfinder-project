@@ -6,7 +6,7 @@ app_name = 'charityfinder_app'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('project/<int:id>/', views.project_detail_view),
+    path('project/<int:pid>/', views.project_detail_view),
 
     # API
     path('api/v1/comments/', CommentList.as_view()),
