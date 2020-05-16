@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True, slug_field='username')
+    author = serializers.SlugRelatedField(queryset=get_user_model().objects.all(), slug_field='username')
 
     class Meta:
         fields = ('id', 'author', 'body', 'created', 'project_id', 'reply_to',)

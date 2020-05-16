@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Comment(models.Model):
     # any way to avoid null?, 8 = deleted user instance
-    author = models.ForeignKey(User, on_delete=models.SET(8), null=True)
+    author = models.ForeignKey(User, on_delete=models.SET(8))
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     last_edited = models.DateTimeField(auto_now=True)
@@ -20,5 +20,11 @@ class Comment(models.Model):
         return f"{self.author} - {self.created}"
 
 
-# rating? (user / all)
-#
+class ProjectTotalRating(models.Model):
+    pass
+
+
+# enable view/api view @auth
+# if true / unique or how to limit to 1?
+class UserProjectRating(models.Model):
+    pass
