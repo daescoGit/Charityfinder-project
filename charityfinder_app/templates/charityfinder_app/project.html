@@ -1,27 +1,66 @@
 {% extends "charityfinder_app/base.html" %}
 
 {% block content %}
+<section id="content">
+    <h1>{{ gg_api_data.project.title }}</h1>
+    <img src="{{ gg_api_data.project.imageLink }}"/>
+    <p>{{ gg_api_data.project.summary }}</p>
+    <p>Country:
+         {% for country in gg_api_data.project.countries.country %}
+            <strong>{{ country.name }}</strong>
+         {% endfor %}</p>
+    <p>Themes:
+        {% for theme in gg_api_data.project.themes.theme %}
+            <strong>{{ theme.name }}</strong>
+        {% endfor %}</p>
+    <p>Donation options:</p>
+        {% for option in gg_api_data.project.donationOptions.donationOption %}
+            <p><strong>{{ option.amount }}</strong> - {{ option.description }}</p>
+        {% endfor %}
+    <p>Organization: <strong>{{ gg_api_data.project.organization.name }}</strong></p>
+    <p>Website: <a href="{{ gg_api_data.project.organization.url }}">{{ gg_api_data.project.organization.url }}</a></p>
+    <p>Mission:</p> <p>{{ gg_api_data.project.organization.mission }}</p>
+    <p id="org-rating">Organization user rating: x.x </p>
+    <p>Rate org: ...</p>
+
     <hr />
-    {{ gg_api_data }}
-    <hr />
-    {% for comment in comments  %}
-    {# form?(handle reply) #}
-        <div>
-            <div>{{ comment.author }} - {{ comment.created }}</div>
-            <div>{{ comment.body }}</div>
-        </div>
-    {% endfor %}
-    <hr />
-    <form action="." method="POST">
+    <div id="post-comment-container">
         {% if request.user.is_authenticated %}
-            <input type="text" name="newComment" placeholder="Write a comment" />
-            <button>Send</button>
+           <form action="." method="POST">
+                <textarea class="comment-input-style-1" name="newComment" placeholder="Comment on this project"></textarea>
+                <br />
+                <button class="btn-style-2">Post</button>
+                {% csrf_token %}
+            </form>
         {% else %}
             <input type="text" name="newComment" placeholder="Login to comment" disabled/>
         {% endif %}
-        {% csrf_token %}
+    </div>
 
-    </form>
-    <hr />
+    {% load mptt_tags %}
+    <ul>
+        {% recursetree comments %}
+            <div class="bg-style-1">
+                <div>{{ node.author }} - {{ node.created }} - {{ node.rated }}</div>
+                <div class="comment-box-style-1"><p class="text-style-1">{{ node.body }}</p></div>
+                {% if request.user.is_authenticated %}
+                    <button class="btn-style-1" onclick="this.nextElementSibling.setAttribute('style', 'display: Inherit;')">↩</button>
+                    <form action="." method="POST" style="display:none" id="reply-form-{{ node.pk }}">
+                        <textarea class="comment-input-style-1 " name="newComment" placeholder="Write a reply"></textarea>
+                        <input type="hidden" name="reply" value="{{ node.pk }}" />
+                        <br />
+                        <button class="btn-style-2">Post</button>
+                        {% csrf_token %}
+                    </form>
+                {% endif %}
+            </div>
 
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        {% endrecursetree %}
+    </ul>
+</section>
 {% endblock %}

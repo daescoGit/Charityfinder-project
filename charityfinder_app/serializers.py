@@ -8,7 +8,7 @@ class CommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(queryset=get_user_model().objects.all(), slug_field='username')
 
     class Meta:
-        fields = ('id', 'author', 'body', 'created', 'project_id', 'reply_to',)
+        fields = ('id', 'author', 'body', 'created', 'project_id', 'up_votes', 'parent',)
         model = Comment
 
 

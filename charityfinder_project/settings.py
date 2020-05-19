@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     # RQ
     'django_rq',
+    # mptt for comment hierarchy
+    'mptt',
 
     # local
     'charityfinder_app',

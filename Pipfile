@@ -12,6 +12,7 @@ requests = "*"
 django-rest-auth = "==0.9.5"
 django-allauth = "==0.38.0"
 django-rq = "*"
+django-mptt = "*"
 
 [requires]
 python_version = "3.8"
