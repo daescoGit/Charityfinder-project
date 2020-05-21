@@ -3,7 +3,14 @@
 {% block content %}
 <section id="content">
     <h1>{{ gg_api_data.project.title }}</h1>
-    <img src="{{ gg_api_data.project.imageLink }}"/>
+    {# accessing last element using |last, instead of looping array #}
+    {# accessing key/value using %with/as% assignment #}
+    <div id="project-img-container">
+        <img id="project-img" src="
+            {% with gg_api_data.project.image.imagelink|last as last %}
+                {{ last.url }}
+            {% endwith %}" />
+    </div>
     <p>{{ gg_api_data.project.summary }}</p>
     <p>Country:
          {% for country in gg_api_data.project.countries.country %}
@@ -24,9 +31,10 @@
     <p>Rate org: ...</p>
 
     <hr />
+
     <div id="post-comment-container">
         {% if request.user.is_authenticated %}
-           <form action="." method="POST">
+           <form action="{% url 'charityfinder_app:new_comment' pid %}" method="POST">
                 <textarea class="comment-input-style-1" name="newComment" placeholder="Comment on this project"></textarea>
                 <br />
                 <button class="btn-style-2">Post</button>
@@ -41,11 +49,22 @@
     <ul>
         {% recursetree comments %}
             <div class="bg-style-1">
-                <div>{{ node.author }} - {{ node.created }} - {{ node.rated }}</div>
+                <div>
+                    {{ node.author }} - {{ node.comment_age }} -
+                    {% if request.user.is_authenticated %}
+                        <form action="." method="POST">
+                            <input type="hidden" name="reply" value="{{ node.pk }}" />
+                            <input type="hidden" name="comment_rating" value="1" />
+                            <button class="btn-style-3">⬆️</button>
+                            <button class="btn-style-3">⬇️</button>
+                        </form>
+                    {% endif %}
+                    {{ count.node.rated }}
+                </div>
                 <div class="comment-box-style-1"><p class="text-style-1">{{ node.body }}</p></div>
                 {% if request.user.is_authenticated %}
-                    <button class="btn-style-1" onclick="this.nextElementSibling.setAttribute('style', 'display: Inherit;')">↩</button>
-                    <form action="." method="POST" style="display:none" id="reply-form-{{ node.pk }}">
+                    <button id="reply-btn" class="btn-style-1" onclick="this.nextElementSibling.setAttribute('style', 'display: Inherit;')">↩️</button>
+                    <form action="{% url 'charityfinder_app:new_comment' pid %}" method="POST" style="display:none" id="reply-form-{{ node.pk }}">
                         <textarea class="comment-input-style-1 " name="newComment" placeholder="Write a reply"></textarea>
                         <input type="hidden" name="reply" value="{{ node.pk }}" />
                         <br />

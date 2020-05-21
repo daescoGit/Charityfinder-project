@@ -36,7 +36,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 # another way, function/decorator based
 @api_view(['GET'])
 def project_detail(request, id):
-    url = f"https://api.globalgiving.org/api/public/projectservice/projects/{id}/summary.json?api_key=79638b32-7812-44ef-b361-9eb4ef85aae0"
+    url = f"https://api.globalgiving.org/api/public/projectservice/projects/{id}.json?api_key=79638b32-7812-44ef-b361-9eb4ef85aae0"
     api_res = requests.get(url)
     data = api_res.json()
     return Response(data)
