@@ -51,6 +51,14 @@ ul {
     margin-bottom: 20px;
 }
 
+#comment-panel {
+    width: 522px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto 10fr;
+    grid-column-gap: 5px;
+    align-items: center;
+}
+
 .comment-box-style-1 {
     background-color: #f7f7f7;
     margin: 5px;
@@ -77,6 +85,14 @@ ul {
     font-size: 1em;
     padding: 0;
     border: none;
+    background: none;
+    color: blue;
+}
+
+.btn-style-4 {
+    color: red;
+    border: none;
+    background: none;
 }
 
 button:hover {
@@ -85,6 +101,7 @@ button:hover {
 
 #reply-btn {
     margin-left: 15px;
+    font-size: 1.2em;
 }
 
 #acc {
@@ -121,4 +138,14 @@ button:hover {
     height: 25em;
     border-radius: 8px;
     object-fit: cover;
+}
+
+.small-left-gap {
+    margin-left: 10px;
+}
+
+#slidecontainer {
+    align-items: center;
+    display: flex;
+    gap: 5px;
 }

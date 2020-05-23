@@ -16,6 +16,8 @@
         <a href="#">Things</a>
         {% if request.user.is_authenticated %}
             <p id="acc">Logged in: <strong>{{ user }}</strong> - <a href="{% url 'login_app:logout' %}">Log out</a></p>
+        {% else %}
+            <p id="acc"><a href="{% url 'login_app:login' %}">Log in</a></p>
         {% endif %}
     </nav>
     {% block content %}

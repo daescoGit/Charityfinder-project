@@ -6,8 +6,14 @@ app_name = 'charityfinder_app'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('project/<int:pid>/', views.project_detail_view, name='project'),
-    path('project/<int:pid>/new-comment', views.new_comment_view, name='new_comment'),
+    path('project/<int:pid>/', views.project_detail, name='project'),
+    path('project/<int:pid>/new-vote', views.new_project_vote, name='new_vote'),
+
+    # comment app
+    path('project/<int:pid>/new-comment', views.new_comment, name='new_comment'),
+    path('project/<int:pid>/delete-comment', views.delete_comment, name='delete_comment'),
+    path('project/<int:pid>/new-comment-rating', views.new_comment_rating, name='new_rating'),
+
 
     # API
     path('api/v1/comments/', CommentList.as_view()),
