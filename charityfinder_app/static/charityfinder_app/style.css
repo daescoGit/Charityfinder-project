@@ -4,8 +4,31 @@ body {
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 section {
     padding-bottom: 150px;
+}
+
+nav {
+    height: 10em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 10fr;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    background: #d7d189;
+    height: 6em;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+}
+
+nav a {
+    color: #794949;
+    font-weight: bold;
 }
 
 #content {
@@ -28,6 +51,14 @@ ul {
     margin-bottom: 20px;
 }
 
+#comment-panel {
+    width: 522px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto 10fr;
+    grid-column-gap: 5px;
+    align-items: center;
+}
+
 .comment-box-style-1 {
     background-color: #f7f7f7;
     margin: 5px;
@@ -38,10 +69,8 @@ ul {
 
 .btn-style-1 {
     font-size: 1.5em;
-    padding: 0 10px;
-    border: 1px solid gainsboro;
-    border-radius: 5px;
-    margin: 0 5px;
+    padding: 0;
+    border: none;
 }
 
 .btn-style-2 {
@@ -52,12 +81,33 @@ ul {
     color: green;
 }
 
+.btn-style-3 {
+    font-size: 1em;
+    padding: 0;
+    border: none;
+    background: none;
+    color: blue;
+}
+
+.btn-style-4 {
+    color: red;
+    border: none;
+    background: none;
+}
+
 button:hover {
     cursor: pointer;
 }
 
+#reply-btn {
+    margin-left: 15px;
+    font-size: 1.2em;
+}
+
 #acc {
-    color: darkslateblue;
+    color: darkblue;
+    align-self: end;
+    margin: 0 5em 0 auto;
 }
 
 .comment-input-style-1 {
@@ -81,4 +131,21 @@ button:hover {
 
 #org-rating {
     font-size: 1.3em;
+}
+
+#project-img {
+    width: 100%;
+    height: 25em;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.small-left-gap {
+    margin-left: 10px;
+}
+
+#slidecontainer {
+    align-items: center;
+    display: flex;
+    gap: 5px;
 }

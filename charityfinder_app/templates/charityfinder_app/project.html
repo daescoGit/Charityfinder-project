@@ -3,7 +3,14 @@
 {% block content %}
 <section id="content">
     <h1>{{ gg_api_data.project.title }}</h1>
-    <img src="{{ gg_api_data.project.imageLink }}"/>
+    {# accessing last element using |last, instead of looping array #}
+    {# accessing key/value using %with/as% assignment #}
+    <div id="project-img-container">
+        <img id="project-img" src="
+            {% with gg_api_data.project.image.imagelink|last as last %}
+                {{ last.url }}
+            {% endwith %}" />
+    </div>
     <p>{{ gg_api_data.project.summary }}</p>
     <p>Country:
          {% for country in gg_api_data.project.countries.country %}
@@ -20,14 +27,33 @@
     <p>Organization: <strong>{{ gg_api_data.project.organization.name }}</strong></p>
     <p>Website: <a href="{{ gg_api_data.project.organization.url }}">{{ gg_api_data.project.organization.url }}</a></p>
     <p>Mission:</p> <p>{{ gg_api_data.project.organization.mission }}</p>
-    <p id="org-rating">Organization user rating: x.x </p>
-    <p>Rate org: ...</p>
+    <p id="org-rating">Organization rated by users:
+        <strong>{{ project_rating }}</strong>
+        <span style="font-size: 0.9em">⭐</span>
+    </p>
+    <div><p>Rate org:</p>
+        {% if request.user.is_authenticated %}
+            <form action="{% url 'charityfinder_app:new_vote' pid %}" method="POST">
+                {% csrf_token %}
+                <div id="slidecontainer">
+                    <input type="range" min="0" max="10" value="10" name="project_rating" id="rating-slider">
+                    <strong><span id="slider-value"></span></strong>
+                    <button class="btn-style-3">Rate</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
 
     <hr />
+{# comment interactions, eventually made with ajax, components etc. #}
     <div id="post-comment-container">
         {% if request.user.is_authenticated %}
-           <form action="." method="POST">
-                <textarea class="comment-input-style-1" name="newComment" placeholder="Comment on this project"></textarea>
+           <form action="{% url 'charityfinder_app:new_comment' pid %}" method="POST">
+                <textarea
+                        class="comment-input-style-1"
+                        name="newComment"
+                        placeholder="Comment on this project">
+                </textarea>
                 <br />
                 <button class="btn-style-2">Post</button>
                 {% csrf_token %}
@@ -41,12 +67,47 @@
     <ul>
         {% recursetree comments %}
             <div class="bg-style-1">
-                <div>{{ node.author }} - {{ node.created }} - {{ node.rated }}</div>
+                <div id="comment-panel">
+                    <div>{{ node.author }}</div>
+                    <div class="small-left-gap">{{ node.comment_age }}</div>
+                    <div class="small-left-gap">{{ node.comment_calculated_rating }} point</div>
+                    {% if request.user.is_authenticated %}
+                        <form action="{% url 'charityfinder_app:new_rating' pid %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn-style-3" onclick="
+                                this.parentElement.lastElementChild.setAttribute('value', '1');">⬆️
+                            </button>
+                            <button class="btn-style-3" onclick="
+                                this.parentElement.lastElementChild.setAttribute('value', '-1');">⬇️
+                            </button>
+                            <button class="btn-style-3" onclick="
+                                this.parentElement.lastElementChild.setAttribute('value', '0');">❎
+                            </button>
+                            {% if request.user == node.author %}
+                                <button
+                                        formaction="{% url 'charityfinder_app:delete_comment' pid %}"
+                                        class="btn-style-4">Delete
+                                </button>
+                            {% endif %}
+                            <input type="hidden" name="reply" value="{{ node.pk }}" />
+                            <input type="hidden" name="comment_rating" value="" />
+                        </form>
+                    {% endif %}
+                </div>
                 <div class="comment-box-style-1"><p class="text-style-1">{{ node.body }}</p></div>
                 {% if request.user.is_authenticated %}
-                    <button class="btn-style-1" onclick="this.nextElementSibling.setAttribute('style', 'display: Inherit;')">↩</button>
-                    <form action="." method="POST" style="display:none" id="reply-form-{{ node.pk }}">
-                        <textarea class="comment-input-style-1 " name="newComment" placeholder="Write a reply"></textarea>
+                    <button
+                            id="reply-btn" class="btn-style-1"
+                            onclick="this.nextElementSibling.setAttribute('style', 'display: Inherit;')">↩️
+                    </button>
+                    <form
+                            action="{% url 'charityfinder_app:new_comment' pid %}"
+                            method="POST" style="display:none" id="reply-form-{{ node.pk }}">
+                        <textarea
+                                class="comment-input-style-1 "
+                                name="newComment"
+                                placeholder="Write a reply">
+                        </textarea>
                         <input type="hidden" name="reply" value="{{ node.pk }}" />
                         <br />
                         <button class="btn-style-2">Post</button>
@@ -63,4 +124,16 @@
         {% endrecursetree %}
     </ul>
 </section>
+<script>
+    const slider = document.getElementById("rating-slider");
+    const slider_output = document.getElementById("slider-value");
+    console.log(slider_output)
+    console.log(slider)
+    slider_output.innerHTML = slider.value;
+
+    slider.oninput = function() {
+      slider_output.innerHTML = this.value;
+    }
+</script>
 {% endblock %}
+
