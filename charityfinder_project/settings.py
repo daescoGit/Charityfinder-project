@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # local
     'charityfinder_app',
     'login_app',
+    'comment_app',
 ]
 
 REST_FRAMEWORK = {

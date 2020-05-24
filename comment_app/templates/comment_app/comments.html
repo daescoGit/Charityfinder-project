@@ -1,0 +1,82 @@
+{% extends "charityfinder_app/base.html" %}
+
+{% block comment %}
+<section id="comment-section" class="content">
+{# comment interactions, eventually made with ajax, components etc. #}
+    <div id="post-comment-container">
+        {% if request.user.is_authenticated %}
+           <form action="{% url 'comment_app:new_comment' pid %}" method="POST">
+                <textarea
+                        class="comment-input-style-1"
+                        name="newComment"
+                        placeholder="Comment on this project"></textarea>
+                <br />
+                <button class="btn-style-2">Post</button>
+                {% csrf_token %}
+            </form>
+        {% else %}
+            <input type="text" name="newComment" placeholder="Login to comment" disabled/>
+        {% endif %}
+    </div>
+
+    {% load mptt_tags %}
+    <ul>
+        {% recursetree comments %}
+            <div class="bg-style-1">
+                <div id="comment-panel">
+                    <div>{{ node.author }}</div>
+                    <div class="small-left-gap">{{ node.comment_age }}</div>
+                    <div class="small-left-gap">{{ node.comment_calculated_rating }} point</div>
+                    {% if request.user.is_authenticated %}
+                        <form action="{% url 'comment_app:new_rating' pid %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn-style-3" onclick="
+                                this.parentElement.lastElementChild.setAttribute('value', '1');">⬆️
+                            </button>
+                            <button class="btn-style-3" onclick="
+                                this.parentElement.lastElementChild.setAttribute('value', '-1');">⬇️
+                            </button>
+                            <button class="btn-style-3" onclick="
+                                this.parentElement.lastElementChild.setAttribute('value', '0');">❎
+                            </button>
+                            {% if request.user == node.author %}
+                                <button
+                                        formaction="{% url 'comment_app:delete_comment' pid %}"
+                                        class="btn-style-4">Delete
+                                </button>
+                            {% endif %}
+                            <input type="hidden" name="reply" value="{{ node.pk }}" />
+                            <input type="hidden" name="comment_rating" value="" />
+                        </form>
+                    {% endif %}
+                </div>
+                <div class="comment-box-style-1"><p class="text-style-1">{{ node.body }}</p></div>
+                {% if request.user.is_authenticated %}
+                    <button
+                            id="reply-btn" class="btn-style-1"
+                            onclick="this.nextElementSibling.setAttribute('style', 'display: Inherit;')">↩️
+                    </button>
+                    <form
+                            action="{% url 'comment_app:new_comment' pid %}"
+                            method="POST" style="display:none" id="reply-form-{{ node.pk }}">
+                        <textarea
+                                class="comment-input-style-1 "
+                                name="newComment"
+                                placeholder="Write a reply"></textarea>
+                        <input type="hidden" name="reply" value="{{ node.pk }}" />
+                        <br />
+                        <button class="btn-style-2">Post</button>
+                        {% csrf_token %}
+                    </form>
+                {% endif %}
+            </div>
+
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        {% endrecursetree %}
+    </ul>
+</section>
+{% endblock %}

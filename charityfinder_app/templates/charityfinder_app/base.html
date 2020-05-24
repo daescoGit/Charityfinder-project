@@ -20,7 +20,9 @@
             <p id="acc"><a href="{% url 'login_app:login' %}">Log in</a></p>
         {% endif %}
     </nav>
-    {% block content %}
+    {% block charity %}
+    {% endblock %}
+    {% block comment %}
     {% endblock %}
 </body>
 </html>

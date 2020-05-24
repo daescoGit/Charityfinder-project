@@ -1,6 +1,6 @@
 # serializers can exclude fields as well and deserialize
 from rest_framework import serializers
-from .models import Comment
+from comment_app .models import Comment
 from django.contrib.auth import get_user_model
 
 

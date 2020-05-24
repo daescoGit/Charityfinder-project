@@ -10,8 +10,9 @@ from django.utils import timezone
 class Comment(MPTTModel):
     # 8 = deleted user instance
     author = models.ForeignKey(User, on_delete=models.SET(8))
-    body = models.TextField(max_length=1024)
+    body = models.CharField(max_length=2000)
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     # indexed for faster queries on individual project endpoints
     project_id = models.IntegerField(db_index=True)
     rated = models.ManyToManyField(User, through='UserCommentRating', related_name='rated_user')
