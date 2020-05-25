@@ -9,4 +9,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     # all-auth, alt to using custom login app
     # path('accounts/', include('allauth.urls')),
+    path('comments/', include('comment_app.urls')),
 ]
