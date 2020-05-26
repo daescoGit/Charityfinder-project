@@ -22,6 +22,10 @@ class Comment(MPTTModel):
     def __str__(self):
         return f"{self.author} - {self.created}"
 
+    class MPTTMeta:
+        # Category.objects.rebuild() to apply to existing structure
+        order_insertion_by = ['-created']
+
     def comment_age(self):
         age = timezone.now() - self.created
         if age < timedelta(minutes=1):

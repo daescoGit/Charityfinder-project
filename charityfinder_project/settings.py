@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'charityfinder_app',
     'login_app',
     'comment_app',
+    'user_profile_app',
 ]
 
 REST_FRAMEWORK = {
@@ -62,6 +63,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'middleware.middleware.AntiSpamMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -150,11 +152,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# uploaded images save/serve path
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # django-allauth (api) config, use console
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-SITE_ID = 1
-LOGIN_REDIRECT_URL = '/charityfinder/mypage'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/charityfinder'
+# SITE_ID = 1
+# LOGIN_REDIRECT_URL = '/charityfinder/mypage'
+# ACCOUNT_LOGOUT_REDIRECT_URL = '/charityfinder'
 
 # EMAIL SETTINGS
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -162,5 +169,5 @@ EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True ### <--- DON'T USE THIS - USE EMAIL_USE_TLS
 EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'daneskildsen1234@gmail.com'
+EMAIL_HOST_USER = 'sender-email'
 EMAIL_HOST_PASSWORD = 'sendinblue-password'

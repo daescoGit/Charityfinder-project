@@ -1,8 +1,18 @@
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 from .models import Comment, UserCommentRating
+
+
+def project_comments(request, pid):
+    comments = Comment.objects.filter(project_id=pid)  # .order_by('-rated', '-created')
+
+    context = {
+        'pid': pid,
+        'comments': comments,
+    }
+    return render(request, 'comment_app/comments.html', context)
 
 
 @login_required  # alt: request.user.is_authenticated check
