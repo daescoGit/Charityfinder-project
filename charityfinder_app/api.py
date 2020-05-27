@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from comment_app .models import Comment
 from user_profile_app.models import UserProfile
-from .serializers import CommentSerializer, UserSerializer, ImageSerializer
+from .serializers import CommentSerializer, UserSerializer, ProfileSerializer
 from .permissions import IsAuthorOrReadOnly
 from django.contrib.auth import get_user_model
 import requests
@@ -31,16 +31,16 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
-    # todo add permissions (is owner or admin)
+    # todo authorise read to all
 
 
-class ImageUpload(generics.RetrieveUpdateAPIView):
+class ProfileDetail(generics.RetrieveUpdateAPIView):
     queryset = UserProfile.objects.all()
-    serializer_class = ImageSerializer
-    # todo fix this to combined with userDetail
+    serializer_class = ProfileSerializer
+    # todo combine with UserDetail
 
 
-# another way, function/decorator based
+# function/decorator based api view
 @api_view(['GET'])
 def project_detail(request, pid):
     url = f"https://api.globalgiving.org/api/public/projectservice/projects/{pid}.json?api_key=79638b32-7812-44ef-b361-9eb4ef85aae0"

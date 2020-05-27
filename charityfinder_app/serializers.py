@@ -19,16 +19,13 @@ class CommentSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('id', 'username')
+        fields = ('id', 'username', 'email',)
         model = get_user_model()
 
 
-class ImageSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = "__all__"
+        fields = '__all__'
         model = UserProfile
 
-# rating serializer?
-# other?
-# full content serializer?
