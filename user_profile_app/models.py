@@ -11,7 +11,3 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
-class UserOrganization(models.Model):
-    pass
