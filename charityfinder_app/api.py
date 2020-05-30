@@ -32,12 +32,13 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     # todo authorise read to all
+    # todo allow update with profile relation
 
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = ProfileSerializer
-    # todo combine with UserDetail
+    # todo remove when fully combined with UserDetail
 
 
 # function/decorator based api view

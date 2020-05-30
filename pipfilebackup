@@ -6,16 +6,14 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = "*"
-djangorestframework = "*"
+django = "==2.2.10"
+djangorestframework = "==3.9.2"
 requests = "*"
-django-rest-auth = "*"
-django-allauth = "*"
+django-rest-auth = "==0.9.5"
+django-allauth = "==0.38.0"
 django-rq = "*"
 django-mptt = "*"
 pillow = "*"
-python-memcached = "*"
-python-decouple = "*"
 
 [requires]
 python_version = "3.8"
