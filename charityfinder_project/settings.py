@@ -1,4 +1,5 @@
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,6 +13,10 @@ SECRET_KEY = '9&(1owf*mzwo5h1csq9p3-+z920ojprb*w(5=51rpjc!v%-fvu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# .env decoupled, default to prevent app breaking
+GG_API_KEY = config('api_key', default='')
+SENDINBLUE_KEY = config('sendinblue_key', default='')
 
 ALLOWED_HOSTS = []
 
@@ -73,6 +78,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# docker run -p 6379:6379 redis
+# python manage.py rqworker
 RQ_QUEUES = {
    'default': {
       'HOST': 'localhost',
@@ -80,6 +87,16 @@ RQ_QUEUES = {
       'DB': 0,
       'DEFAULT_TIMEOUT': 360,
    }
+}
+
+# Memcached with python-memcached binding
+# default port 11211
+# add locations to share cache over multiple servers
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
 }
 
 ROOT_URLCONF = 'charityfinder_project.urls'
@@ -157,11 +174,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# django-allauth (api) config, use console
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# SITE_ID = 1
-# LOGIN_REDIRECT_URL = '/charityfinder/mypage'
-# ACCOUNT_LOGOUT_REDIRECT_URL = '/charityfinder'
+# api-auth config
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/charityfinder/mypage'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/charityfinder'
 
 # EMAIL SETTINGS
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -170,4 +186,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sender-email'
-EMAIL_HOST_PASSWORD = 'sendinblue-password'
+EMAIL_HOST_PASSWORD = SENDINBLUE_KEY

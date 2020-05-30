@@ -24,18 +24,18 @@ class AntiSpamMiddleware:
                     'recent_reqs': 1,
                 }
             else:
-                d = user_request_times[client_ip]
+                dic = user_request_times[client_ip]
                 # if prev time + 60s > now (under 60s passed)
-                if d['time'] + datetime.timedelta(seconds=60) > now:
-                    d['recent_reqs'] += 1
-                    print(d)
-                    if d['recent_reqs'] > 3:
+                if dic['time'] + datetime.timedelta(seconds=60) > now:
+                    dic['recent_reqs'] += 1
+                    print(dic)
+                    if dic['recent_reqs'] > 3:
                         raise PermissionDenied
-                        # redirect to eg. captcha
-                        print(d)
+                        # redirect to eg. captcha / gives timeout
+                        print(dic)
                 else:
-                    d['time'] = now
-                    d['recent_reqs'] = 1
+                    dic['time'] = now
+                    dic['recent_reqs'] = 1
                     print(user_request_times)
 
         # forwards the request to the next middleware or view function
