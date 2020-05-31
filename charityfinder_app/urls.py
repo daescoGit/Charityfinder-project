@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .api import CommentList, CommentDetail, UserList, UserDetail, ProfileDetail
+from .api import CommentList, CommentDetail, UserList, UserDetail
 from . import views, api
 
 app_name = 'charityfinder_app'
@@ -10,8 +10,6 @@ urlpatterns = [
     path('projects/<int:pid>/new-vote', views.new_project_vote, name='new_vote'),
 
     # API
-    path('api/v1/profile/<int:pk>/', ProfileDetail.as_view()),
-
     path('api/v1/comments/', CommentList.as_view()),
     path('api/v1/comments/<int:pk>/', CommentDetail.as_view()),
     path('api/v1/users/', UserList.as_view()),

@@ -1,19 +1,19 @@
 from rest_framework import generics
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from comment_app .models import Comment
-from user_profile_app.models import UserProfile
-from .serializers import CommentSerializer, UserSerializer, ProfileSerializer
-from .permissions import IsAuthorOrReadOnly
+from .serializers import CommentSerializer, UserSerializer
+from .permissions import IsAuthorOrReadOnly, IsOwnerOrReadOnly, AllowRead, IsLoggedOrReadOnly
 from django.contrib.auth import get_user_model
-import requests
+from django.core.cache import cache
+from .gg_api_call import gg_call_project, gg_call_project_list
 
 
 class CommentList(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    # todo authorise read to all
-    # todo add author permission/restriction to comment (something with list permissions, lookup)
+    permission_classes = (IsLoggedOrReadOnly,)
+    # todo add author permission/restriction to creating comment (list view permission)
 
 
 class CommentDetail(generics.RetrieveUpdateAPIView):
@@ -22,41 +22,32 @@ class CommentDetail(generics.RetrieveUpdateAPIView):
     permission_classes = (IsAuthorOrReadOnly,)
 
 
-class UserList(generics.ListCreateAPIView):
+class UserList(generics.ListAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
-    # todo authorise read to all
+    permission_classes = (AllowRead,)
+    # todo change to admin only view
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
-    # todo authorise read to all
-    # todo allow update with profile relation
-
-
-class ProfileDetail(generics.RetrieveUpdateAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = ProfileSerializer
-    # todo remove when fully combined with UserDetail
+    permission_classes = (IsOwnerOrReadOnly,)
 
 
 # function/decorator based api view
 @api_view(['GET'])
+@permission_classes((AllowRead,))
 def project_detail(request, pid):
-    url = f"https://api.globalgiving.org/api/public/projectservice/projects/{pid}.json?api_key=79638b32-7812-44ef-b361-9eb4ef85aae0"
-    api_res = requests.get(url)
-    data = api_res.json()
-    return Response(data)
-    # todo authorise read to all
-    # todo protect api key
+    query = 'https://api.globalgiving.org/api/public/projectservice/projects/'
+    gg_call_project(pid, query)
+    return Response(cache.get(f"project_{pid}"))
 
 
 @api_view(['GET'])
+@permission_classes((AllowRead,))
 def project_list(request):
-    url = f"https://api.globalgiving.org/api/public/projectservice/all/projects/active/ids.json?api_key=79638b32-7812-44ef-b361-9eb4ef85aae0"
-    api_res = requests.get(url)
-    data = api_res.json()
-    return Response(data)
-    # todo authorise read to all
-    # todo protect api key
+    query = 'https://api.globalgiving.org/api/public/projectservice/all/projects/active/ids'
+    gg_call_project_list(query)
+    return Response(cache.get('projects'))
+
