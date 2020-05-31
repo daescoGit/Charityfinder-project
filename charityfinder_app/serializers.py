@@ -20,7 +20,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = '__all__'
+        fields = ('phone', 'verified_affiliated', 'picture',)
         model = UserProfile
 
 
@@ -31,11 +31,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'user_profile',)
         model = get_user_model()
 
-    """def update(self, instance, validated_data):
-        instance.username = validated_data.get('username', instance.username)
-        instance.email = validated_data.get('email', instance.email)
-        instance.save()
-        
-        # nested
+    # simplify later
+    def update(self, instance, validated_data):
+        nested_serializer = self.fields['user_profile']
+        nested_instance = instance.user_profile
+        nested_data = validated_data.pop('user_profile')
+        nested_serializer.update(nested_instance, nested_data)
+        return super(UserSerializer, self).update(instance, validated_data)
 
-        return instance"""
