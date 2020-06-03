@@ -15,7 +15,7 @@ def gg_call_project(pid, query):
         gg_api_data = gg_api_res.json()
         # using add here instead of .set (only add if doesn't exist)
         # to not refresh the cache countdown (forcing api call every (x)sec to check for updates)
-        cache.add(f"project_{pid}", gg_api_data, 30)
+        cache.add(f"project_{pid}", gg_api_data, 1800)
         print('gg api cache expired')
     return cache.get(f"project_{pid}")
 

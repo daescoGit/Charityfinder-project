@@ -55,9 +55,10 @@ INSTALLED_APPS = [
     'user_profile_app',
 ]
 
+# Using a strong base permission and losing up on the individual views
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # for browsable API, client side log in, out
