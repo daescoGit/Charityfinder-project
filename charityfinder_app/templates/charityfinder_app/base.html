@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'charityfinder_app/style.css' %}" media="screen"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <title>Chariftyfinder</title>
 </head>
 <body>
     <nav>
-        <div>Logo</div>
+        <img src="/media/Charityfinder_logo4.png" height="50em" id="nav-logo" alt="logo">
         <a href="#">Home</a>
         <a href="#">About</a>
         <a href="#">Stuff</a>
         <a href="#">Things</a>
         {% if request.user.is_authenticated %}
-            <p id="acc">Logged in: <strong>{{ user }}</strong> - <a href="{% url 'login_app:logout' %}">Log out</a></p>
+            <div><p id="acc">Logged in: <strong>{{ user }}</strong> - <a href="{% url 'login_app:logout' %}">Log out</a></p></div>
         {% else %}
             <p id="acc"><a href="{% url 'login_app:login' %}">Log in</a></p>
         {% endif %}
     </nav>
+    {% block content %}
+    {% endblock %}
     {% block charity %}
     {% endblock %}
     {% block comment %}

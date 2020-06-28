@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Lag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 960 560" style="enable-background:new 0 0 960 560;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;fill:#232221;}
+	.st1{display:none;fill:#FFA131;}
+	.st2{display:none;fill:#FFFFFF;}
+	.st3{fill:url(#XMLID_12_);}
+	.st4{fill:url(#XMLID_14_);}
+	.st5{fill:none;stroke:#5B5B5B;stroke-width:10;stroke-miterlimit:10;}
+</style>
+<rect id="XMLID_2_" x="59" y="264.3" class="st0" width="344.1" height="293.9"/>
+<path id="XMLID_7_" class="st1" d="M467.7,365.7c-12,5.7-25.5,8.8-39.7,8.8c-51.6,0-93.5-41.9-93.5-93.5s41.9-93.5,93.5-93.5
+	s93.5,41.9,93.5,93.5c0,10-1.6,19.7-4.5,28.7l72.1,63.2L589,95c0,0-58.5,0-161,0s-185.5,83.3-185.5,185.8S325.5,466.4,428,466.4
+	c42,0,80.7-13.9,111.8-37.4L467.7,365.7z"/>
+<polygon id="XMLID_8_" class="st2" points="428,281 428,0 733,0 "/>
+<image style="overflow:visible;" width="512" height="327" id="XMLID_1_" xlink:href="mag.png"  transform="matrix(0.6254 0.1707 -0.1707 0.6254 361.7713 176.0433)">
+</image>
+<g id="XMLID_6_">
+	<linearGradient id="XMLID_12_" gradientUnits="userSpaceOnUse" x1="241.2892" y1="280.7108" x2="543.5433" y2="280.7108">
+		<stop  offset="1.021794e-007" style="stop-color:#FF8500"/>
+		<stop  offset="0.1778" style="stop-color:#FF930C"/>
+		<stop  offset="0.5149" style="stop-color:#FEB82D"/>
+		<stop  offset="0.9728" style="stop-color:#FCF462"/>
+		<stop  offset="1" style="stop-color:#FCF865"/>
+	</linearGradient>
+	<path id="XMLID_10_" class="st3" d="M427,379.7c-54.7,0-99-44.3-99-99s44.3-99,99-99c2.7,0,5.3,0.1,8,0.3l0.1-0.1l59.3-87H434v0.1
+		c-2.3-0.1-4.7-0.1-7-0.1c-102.6,0-185.7,83.1-185.7,185.7S324.4,466.4,427,466.4c44.1,0,84.7-15.4,116.5-41.1l-68.2-58.2
+		C461,375.1,444.6,379.7,427,379.7z"/>
+	<linearGradient id="XMLID_14_" gradientUnits="userSpaceOnUse" x1="467.2454" y1="235.583" x2="717.0718" y2="235.583">
+		<stop  offset="1.021794e-007" style="stop-color:#FF8500"/>
+		<stop  offset="0.1778" style="stop-color:#FF930C"/>
+		<stop  offset="0.5149" style="stop-color:#FEB82D"/>
+		<stop  offset="0.9728" style="stop-color:#FCF462"/>
+		<stop  offset="1" style="stop-color:#FCF865"/>
+	</linearGradient>
+	<path id="XMLID_13_" class="st4" d="M701.3,95H532.2l-59.3,87l-5.6,8.3c34.6,15.4,58.7,50.1,58.7,90.4c0,13.3-2.6,26-7.4,37.6
+		l67.8,57.8c16.2-27,25.7-58.5,26.3-92.2h35.6l26.6-66h-73c-4.6-12.7-10.5-24.8-17.5-36h105.3l26.3-65.3
+		C720.1,106.3,712.5,95,701.3,95z"/>
+</g>
+<circle id="XMLID_11_" class="st5" cx="426.3" cy="280.7" r="68.3"/>
+</svg>

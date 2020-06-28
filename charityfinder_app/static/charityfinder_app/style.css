@@ -2,14 +2,51 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    background: #f9f9f9;
 }
 
 a {
     text-decoration: none;
 }
 
+h1 {
+    margin: 1em 0px;
+    font-size: 1.7em;
+    font-style: italic;
+    color: #3f3131;
+}
+
+.headline {
+    font-family: 'Playfair Display', serif;
+    padding: 1em;
+    text-align: center;
+    color: #d7d189;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(215,209,137,1) 50%, rgba(255,255,255,0) 100%);
+    border-image-slice: 1;
+    width: 60%;
+    margin: 0 20%;
+}
+
+section {
+    background: white;
+    width: 60vw;
+    min-height: calc(100vh - 100px);
+    padding: 100px 4vw 0 4vw;
+    margin: 0 auto;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+}
+
 #comment-section {
     padding-bottom: 150px;
+    padding-top: 30px;
+}
+
+#index-section {
+    padding-top: 38em;
 }
 
 nav {
@@ -21,9 +58,13 @@ nav {
     text-align: center;
     background: #d7d189;
     height: 6em;
-    -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
+    z-index: 10;
+    position: fixed;
+    width: 100vw;
+    top: 0;
 }
 
 nav a {
@@ -31,9 +72,58 @@ nav a {
     font-weight: bold;
 }
 
+nav div:last-child {
+    justify-self: end;
+}
+
+nav img {
+    padding-left: 3.5vw;
+}
+
+#search-area {
+    background: #fff8df;
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    top: 95px;
+    height: 30em;
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.3);
+}
+
+#search-area div:first-child {
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(255,255,255,0) 10%, rgb(255, 255, 255) 90%), url('/media/happyppl.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3;
+}
+
+#hero-text {
+    font-size: 3em;
+    font-family: 'Playfair Display', serif;
+    color: #9b8d8d;
+    position: absolute;
+    top: 2em;
+    font-style: italic;
+    left: 20%;
+}
+
+#search-area input {
+    width: 33.3%;
+    padding: 1.5em;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+    position: absolute;
+    top: 17em;
+    left: calc(33.3% - 3em);
+}
+
 .content {
-    margin: 0 2em;
-    max-width: 70em;
+    padding-bottom: 3em;
+    margin-bottom: 1em;
 }
 
 .text-style-1 {
@@ -106,7 +196,6 @@ button:hover {
 
 #acc {
     color: darkblue;
-    align-self: end;
     margin: 0 5em 0 auto;
 }
 

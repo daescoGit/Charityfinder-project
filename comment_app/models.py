@@ -15,7 +15,7 @@ class Comment(MPTTModel):
     updated = models.DateTimeField(auto_now=True)
     # indexed for faster queries on individual project endpoints
     project_id = models.IntegerField(db_index=True)
-    rated = models.ManyToManyField(User, through='UserCommentRating', related_name='rated_user')
+    # rated = models.ManyToManyField(User, through='UserCommentRating', related_name='rated_user')
     # null = required by MPTT model, comment not deleted, but updated to "deleted" to keep structure
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 

@@ -28,7 +28,7 @@
     <p>Website: <a href="{{ gg_api_data.project.organization.url }}">{{ gg_api_data.project.organization.url }}</a></p>
     <p>Mission:</p> <p>{{ gg_api_data.project.organization.mission }}</p>
     <p id="org-rating">Organization rated by users:
-        <strong>{{ project_rating|floatformat:1}}</strong>
+        <strong>{{ project_rating|floatformat:1 }}</strong>
         <span style="font-size: 0.9em">⭐</span>
     </p>
     <div><p>Rate org:</p>
@@ -43,7 +43,6 @@
             </form>
         {% endif %}
     </div>
-    <hr />
 </section>
 <script>
     const slider = document.getElementById("rating-slider");

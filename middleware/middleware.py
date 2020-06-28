@@ -2,7 +2,7 @@ from django.core.exceptions import PermissionDenied
 import datetime
 
 
-user_request_times = {}
+RECENT_IP_REQ = {}
 
 
 # rudimentary post request limit
@@ -18,13 +18,13 @@ class AntiSpamMiddleware:
             now = datetime.datetime.now()
             client_ip = request.META.get('REMOTE_ADDR')
 
-            if client_ip not in user_request_times:
-                user_request_times[client_ip] = {
+            if client_ip not in RECENT_IP_REQ:
+                RECENT_IP_REQ[client_ip] = {
                     'time': now,
                     'recent_reqs': 1,
                 }
             else:
-                dic = user_request_times[client_ip]
+                dic = RECENT_IP_REQ[client_ip]
                 # if prev time + 60s > now (under 60s passed)
                 if dic['time'] + datetime.timedelta(seconds=60) > now:
                     dic['recent_reqs'] += 1
@@ -36,7 +36,7 @@ class AntiSpamMiddleware:
                 else:
                     dic['time'] = now
                     dic['recent_reqs'] = 1
-                    print(user_request_times)
+                    print(RECENT_IP_REQ)
 
         # forwards the request to the next middleware or view function
         # get_response = next middleware / view
